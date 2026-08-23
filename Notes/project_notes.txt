@@ -1,0 +1,48 @@
+pyannote.audio
+Open-source PyTorch toolkit for speaker diarization — answering “who spoke when” in an audio file. 
+It ships pretrained Hugging Face pipelines for voice activity detection, overlapped speech, 
+speaker embeddings, and clustering. You typically load a pipeline (e.g. speaker-diarization-community-1), 
+pass a wav, and get timed speaker segments.
+
+SpeechBrain
+All-in-one PyTorch speech toolkit covering ASR, speaker verification, enhancement, separation, TTS, emotion, VAD, and more.
+Recipes plus Hugging Face pretrained models make it useful both to train custom models and to run inference 
+(e.g. speaker embeddings) without building a pipeline from scratch. 
+Broader than pyannote: many speech tasks, not just diarization.
+
+openSMILE
+C++ audio feature extractor (with a Python wrapper) aimed at speech and music, especially emotion/paralinguistics. 
+It computes large, standardized feature sets (ComParE, GeMAPS/eGeMAPS) — MFCCs, pitch, energy, functionals 
+over windows — not transcripts or speaker IDs. Fast enough for real-time or batch; research-friendly license, 
+commercial use needs audEERING’s license.
+
+librosa
+Python library for loading and analyzing audio: waveforms, spectrograms, 
+MFCCs, chroma, beat/tempo, pitch shift, etc. It is the usual preprocessing/feature layer in speech and music ML 
+(NumPy arrays in, features out). It does not transcribe speech or identify speakers; it gives you the signal-processing 
+building blocks.
+
+Whisper
+OpenAI’s open-source ASR model (encoder–decoder Transformer) trained on ~680k hours of multilingual audio. 
+It transcribes speech, IDs language, and can translate non-English speech into English; sizes range from tiny to 
+large/turbo. Robust to noise and accents; used as the speech-to-text stage, often next to diarization.
+
+FastAPI
+Modern Python web framework for REST APIs, built on Starlette + Pydantic. Type hints give you validation, 
+OpenAPI/Swagger docs, and async endpoints with little boilerplate. Typical role here: wrap the speech pipeline 
+(upload audio → run models → return JSON) behind HTTP.
+
+ffmpeg
+Cross-platform CLI/library for converting and inspecting audio/video (decode, resample, trim, remux, extract tracks).
+ Speech stacks use it to turn arbitrary uploads (mp4, m4a, mp3, webm) into a consistent wav (e.g. 16 kHz mono) 
+ before models run. Also used internally by many Python audio loaders.
+
+Mozilla Common Voice
+Crowdsourced multilingual speech corpus: volunteers read sentences; others validate clips. 
+Releases include audio + transcripts plus optional demographics (age, gender, accent), aimed at training/evaluating ASR,
+ especially for under-resourced languages. Scripted speech is the main set; spontaneous speech exists as a newer collection.
+
+VoxCeleb
+Oxford VGG “in the wild” speaker dataset from YouTube interviews (noise, overlap, varied mics).
+ VoxCeleb1: ~1.2k celebrities / 100k+ utterances; VoxCeleb2: ~6k speakers / 1M+ utterances. Standard benchmark for
+  speaker verification, identification, embeddings, and diarization — not a transcription corpus.
