@@ -2,7 +2,7 @@ import logging
 import time
 from uuid import UUID, uuid4
 
-from fastapi import FastAPI, Query, Request, Response, UploadFile
+from fastapi import FastAPI, Query, Request, Response, UploadFile, WebSocket
 from fastapi.exceptions import RequestValidationError
 from starlette.datastructures import UploadFile as StarletteUploadFile
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -14,6 +14,7 @@ from app.errors import AppError, error_body, request_id_var
 from app.logging import configure_logging
 from app.pipeline import analyze
 from app.schemas import AnalyzeResponse
+from app.stream import handle_analyze_socket
 
 logger = logging.getLogger(__name__)
 
@@ -177,3 +178,18 @@ def _resolve_contact_id(contact_id: str | None) -> UUID:
         return UUID(contact_id)
     except ValueError as exc:
         raise AppError(422, "invalid_contact_id", "contact_id must be a UUID") from exc
+
+
+@app.websocket("/ws/analyze")
+async def analyze_stream(
+    websocket: WebSocket,
+    contact_id: str | None = Query(default=None),
+    encoding: str = Query(default="pcm"),
+) -> None:
+    if contact_id:
+        try:
+            UUID(contact_id)
+        except ValueError:
+            await websocket.close(code=4400)
+            return
+    await handle_analyze_socket(websocket, contact_id=contact_id, encoding=encoding)

@@ -6,3 +6,12 @@ curl -s -F "file=@clip.wav" http://127.0.0.1:8000/analyze
 
 
 
+Final:
+
+
+# local
+uvicorn app.main:app --reload --port 8000
+curl -s -F "file=@samples/sample.wav" http://127.0.0.1:8000/analyze
+
+# docker
+docker compose up --build

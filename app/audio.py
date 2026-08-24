@@ -100,6 +100,19 @@ def decode_to_pcm16k_mono(audio_bytes: bytes) -> Waveform:
     return Waveform(samples=samples, sample_rate=TARGET_SAMPLE_RATE)
 
 
+def waveform_from_pcm16le(
+    data: bytes, sample_rate: int = TARGET_SAMPLE_RATE
+) -> Waveform:
+    if not data:
+        raise AudioDecodeError("empty pcm payload")
+    usable = data[: len(data) - (len(data) % 2)]
+    if not usable:
+        raise AudioDecodeError("empty pcm payload")
+    pcm = np.frombuffer(usable, dtype="<i2")
+    samples = (pcm.astype(np.float32) / 32768.0).clip(-1.0, 1.0)
+    return Waveform(samples=samples, sample_rate=sample_rate)
+
+
 def assess_quality(waveform: Waveform) -> AudioQuality:
     if waveform.duration_s < MIN_DURATION_S:
         return AudioQuality.insufficient

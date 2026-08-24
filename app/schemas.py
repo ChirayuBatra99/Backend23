@@ -37,9 +37,21 @@ class AgeBracketPrediction(LabeledPrediction):
     prediction: AgeBracketLabel
 
 
+class LanguagePrediction(LabeledPrediction):
+    prediction: str = "unknown"
+
+
 class AnalyzeResponse(BaseModel):
     contact_id: UUID
     gender: GenderPrediction
     age_bracket: AgeBracketPrediction
     processing_ms: int = Field(ge=0)
     audio_quality: AudioQuality
+    language: LanguagePrediction = Field(
+        default_factory=lambda: LanguagePrediction(prediction="unknown", confidence=0.0)
+    )
+
+
+class StreamUpdate(AnalyzeResponse):
+    partial: bool
+    buffered_ms: int
