@@ -45,7 +45,7 @@ def test_analyze_returns_contract_shape():
     assert 0.0 <= body["age_bracket"]["confidence"] <= 1.0
     assert isinstance(body["processing_ms"], int)
     assert body["processing_ms"] >= 0
-    assert body["audio_quality"] in {label.value for label in AudioQuality}
+    assert body["audio_quality"] == AudioQuality.insufficient.value
 
 
 def test_analyze_uses_provided_contact_id():
