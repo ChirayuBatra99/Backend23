@@ -56,6 +56,7 @@ def decode_to_pcm16k_mono(audio_bytes: bytes) -> Waveform:
     if ffmpeg is None:
         raise AudioDecodeError("ffmpeg is not installed on PATH")
 
+    # Decode entirely over stdin/stdout so caller audio never touches the filesystem.
     command = [
         ffmpeg,
         "-hide_banner",
