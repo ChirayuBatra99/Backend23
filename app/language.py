@@ -1,3 +1,6 @@
+# Short note: The detect_language is the main function here, it receives some raw waveform and makes language predictions.
+
+
 """Best-effort spoken language ID via Whisper tiny (transformers).
 
 Language is a bonus signal, not on the critical path for gender/age. If the

@@ -1,3 +1,5 @@
+# Short note: The main pipeline with starting point as analyze function, it receives raw audio bytes and contact id and returns an AnalyzeResponse.
+
 from app.audio import assess_quality, decode_to_pcm16k_mono
 from app.inference import predict_attributes
 from app.language import detect_language

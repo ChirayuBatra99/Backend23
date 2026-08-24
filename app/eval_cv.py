@@ -1,3 +1,5 @@
+#Short note: This file is a helper file.
+
 """Common Voice label mapping and calibration metrics for the eval harness."""
 
 from __future__ import annotations

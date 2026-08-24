@@ -1,3 +1,5 @@
+#Short note: This file performs the audio decoding and quality assessment at the byte level.
+
 import shutil
 import subprocess
 from dataclasses import dataclass

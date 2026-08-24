@@ -1,3 +1,5 @@
+# The predict_attributes is the main function here, it receives some raw waveform and makes gender and age predictions.
+
 """Age/gender inference from 16 kHz mono PCM.
 
 Uses audEERING's 6-layer wav2vec2 model (public weights on Hugging Face):

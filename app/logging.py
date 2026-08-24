@@ -1,3 +1,5 @@
+# Short note: This is a basic logger file.
+
 import logging
 import sys
 
